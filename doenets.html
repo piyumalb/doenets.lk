@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Results - Department of Examinations</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Custom styles for specific elements to match exactly */
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #ffffff;
+        }
+        .header-bg-swoosh {
+            background: radial-gradient(ellipse at center, rgba(243,205,225,0.4) 0%, rgba(255,255,255,0) 70%);
+            background-size: 100% 150%;
+            background-position: center bottom;
+        }
+        .yellow-notice {
+            background-color: #e2ed11;
+            border: 4px solid #b30000;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+        }
+        .footer-dark {
+            background-color: #3b3b3b;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Suyt'aña (Loading Overlay without blur, centered, very small) -->
+    <div id="loader-overlay" class="fixed inset-0 z-50 hidden flex-col items-center justify-center bg-transparent transition-opacity duration-300">
+        <div class="animate-spin rounded-full h-6 w-6 border-2 border-[#5c85d6] border-t-transparent shadow-sm"></div>
+    </div>
+
+    <!-- P'iqi (Header) -->
+    <header class="w-full relative overflow-hidden py-4 px-4 md:px-12 header-bg-swoosh flex flex-col md:flex-row items-center justify-between">
+        
+        <!-- Uñachäwi (Emblem) -->
+        <div class="flex-shrink-0 mb-4 md:mb-0">
+            <img src="https://www.doenets.lk/assets/images/SL-Logo.png" alt="Sri Lanka Emblem" class="h-28 w-auto drop-shadow-md">
+        </div>
+
+        <!-- Di men text dem (Main Titles) -->
+        <div class="flex flex-col items-center justify-center text-center z-10 flex-grow">
+            <h1 class="text-[#3b5998] text-2xl md:text-3xl font-bold mb-1" style="text-shadow: 1px 1px 2px rgba(0,0,0,0.1);">ශ්‍රී ලංකා විභාග දෙපාර්තමේන්තුව</h1>
+            <h2 class="text-[#3b5998] text-xl md:text-2xl font-bold mb-1" style="text-shadow: 1px 1px 2px rgba(0,0,0,0.1);">இலங்கைப் பரீட்சைத் திணைக்களம்</h2>
+            <h3 class="text-[#3b5998] text-lg md:text-2xl font-bold" style="text-shadow: 1px 1px 2px rgba(0,0,0,0.1);">Department of Examinations, Sri Lanka</h3>
+        </div>
+
+        <!-- Di NETS logo (SVG replica to ensure it doesn't break) -->
+        <div class="flex-shrink-0 hidden md:block mt-4 md:mt-0">
+            <svg width="140" height="120" viewBox="0 0 140 120" class="drop-shadow-sm">
+                <!-- Outer Triangle -->
+                <polygon points="70,10 10,95 130,95" fill="none" stroke="#e11d48" stroke-width="2"/>
+                <polygon points="70,12 12,94 128,94" fill="#ffeff2" opacity="0.5"/>
+                <!-- Inner Lines -->
+                <line x1="40" y1="52" x2="100" y2="52" stroke="#e11d48" stroke-width="1"/>
+                <line x1="70" y1="10" x2="70" y2="95" stroke="#e11d48" stroke-width="1" opacity="0.3"/>
+                <!-- Text elements inside triangle -->
+                <text x="70" y="30" font-size="6" fill="#000" text-anchor="middle">Curriculum</text>
+                <text x="70" y="70" font-size="5" fill="#000" text-anchor="middle">Assessment</text>
+                <text x="70" y="76" font-size="5" fill="#000" text-anchor="middle">& Evaluation</text>
+                <text x="35" y="85" font-size="6" fill="#000" text-anchor="middle">Teaching</text>
+                <text x="105" y="85" font-size="6" fill="#000" text-anchor="middle">Learning</text>
+                <!-- Bottom Rectangle -->
+                <rect x="10" y="98" width="120" height="18" fill="none" stroke="#e11d48" stroke-width="2"/>
+                <text x="70" y="111" font-size="12" font-weight="bold" fill="#000" text-anchor="middle">NETS</text>
+            </svg>
+        </div>
+    </header>
+
+    <!-- Navigationsleiste -->
+    <nav class="w-full bg-white text-gray-700 border-b border-gray-200 relative z-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between h-auto md:h-14 items-center py-2 md:py-0">
+                
+                <!-- Links -->
+                <div class="flex flex-wrap justify-center md:justify-start space-x-1 md:space-x-4 text-sm font-semibold">
+                    <a href="#" class="px-2 py-2 hover:text-red-800 rounded">Home</a>
+                    <a href="#" class="px-2 py-2 hover:text-red-800 rounded">School Exam Results</a>
+                    <a href="#" class="px-2 py-2 hover:text-red-800 rounded">Exam Calendar</a>
+                    <a href="#" class="px-2 py-2 hover:text-red-800 rounded">Certificates / Verification of Results</a>
+                    <a href="#" class="px-2 py-2 hover:text-red-800 rounded">Contact Us</a>
+                </div>
+
+                <!-- Suche und Sprache -->
+                <div class="flex items-center space-x-4 mt-2 md:mt-0 pb-2 md:pb-0">
+                    <div class="relative text-gray-600 focus-within:text-gray-400 border border-gray-300 rounded-md">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-2">
+                            <i class="fas fa-search text-gray-400"></i>
+                        </span>
+                        <input type="search" class="py-1 text-sm bg-white rounded-md pl-8 focus:outline-none focus:bg-white focus:text-gray-900 w-48" placeholder="Search" autocomplete="off">
+                    </div>
+                    <div class="flex space-x-2 text-sm font-bold text-gray-600">
+                        <a href="#" class="hover:underline">සිංහල</a>
+                        <a href="#" class="hover:underline">தமிழ்</a>
+                        <a href="#" class="bg-white text-[#5c85d6] px-2 py-0.5 rounded border border-[#5c85d6]">English</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hauptinhalt -->
+    <main class="flex-grow bg-white py-8 px-4">
+        <div class="max-w-5xl mx-auto bg-[#e5e5e5] pb-12 pt-6 rounded shadow-sm border border-gray-200 relative">
+            
+            <!-- Haupttitel -->
+            <h2 class="text-center text-lg text-gray-700 font-bold mb-6 uppercase">FIND YOUR EXAM RESULTS HERE</h2>
+
+            <!-- Warnhinweis 1 -->
+            <div class="mx-6 md:mx-12 mb-6 yellow-notice px-4 py-3 text-center">
+                <p class="text-[13px] text-gray-800 font-medium leading-tight mb-2">
+                    විභාග ප්‍රතිඵල ශ්‍රී ලංකා රජය සතු දේපලක් වන අතර, නිසි අවසරයකින් තොරව උපුටා ගැනීම, ළඟ තබා ගැනීම, වෙබ් අඩවියක හෝ සමාජ මාධ්‍ය ජාලවල පළ කිරීම හෝ වෙනත් ආකාරයකින් ප්‍රසිද්ධ කිරීම සපුරා තහනම් වන අතර, දඬුවම් ලැබිය හැකි වරදකි.
+                </p>
+                <p class="text-[10px] text-green-900 font-bold leading-tight mb-2 uppercase">
+                    EXAMINATION RESULTS ARE THE PROPERTY OF THE GOVERNMENT OF SRI LANKA, AND COPYING, KEEPING, POSTING ON A WEBSITE OR SOCIAL MEDIA NETWORKS OR OTHERWISE PUBLICIZING THE RESULTS WHICH ARE NOT BELONG TO THE CANDIDATE WITHOUT PROPER PERMISSION IS STRICTLY PROHIBITED AND IS A PUNISHABLE OFFENCE.
+                </p>
+                <p class="text-[13px] text-gray-800 font-medium leading-tight">
+                    பரீட்சைப் பெறுபேறுகள் இலங்கை அரசாங்கத்தின் சொத்தாகும். உரிய அனுமதியின்றி பரீட்சார்த்திகளுக்கு உரியதல்லாத பெறுபேறுகளை பிரதிசெய்தல், தம்வசம் வைத்திருத்தல், இணையத்தளமொன்றிலுன்னோ அல்லது சமூக வலைத்தளங்களிலோ பதிவேற்றம் செய்தல் அல்லது வேறு வடிவங்களில் பிரசுரித்தல் என்பன முற்றாகத் தடைசெய்யப்பட்டுள்ளதுடன் தண்டனைக்குரிய குற்றமுமாகும்.
+                </p>
+            </div>
+
+            <!-- Warning Box 2 -->
+            <div class="mx-6 md:mx-12 mb-8 yellow-notice px-4 py-3 text-center">
+                <p class="text-[13px] text-gray-800 font-medium leading-tight mb-2">
+                    ඔබගේ සහතිකපත්‍රය මාර්ගගතව ලබා ගැනීම සඳහා <a href="#" class="text-blue-800 underline">www.doenets.lk</a> ඔස්සේ විභාග දෙපාර්තමේන්තු නිල වෙබ් අඩවිය වෙත ගොස් "ONLINE CERTIFICATE (G.C.E (O/L) AND G.C.E (A/L))" වෙත පිවිසෙන්න.
+                </p>
+                <p class="text-[10px] text-green-900 font-bold leading-tight mb-2 uppercase">
+                    TO OBTAIN YOUR CERTIFICATE ONLINE, KINDLY VISIT THE OFFICIAL WEBSITE OF THE DEPARTMENT OF EXAMINATIONS VIA <a href="#" class="text-blue-800 underline">www.doenets.lk</a> AND THEN CLICK ON "ONLINE CERTIFICATE (G.C.E. (O/L) AND G.C.E. (A/L))".
+                </p>
+                <p class="text-[13px] text-gray-800 font-medium leading-tight">
+                    உங்கள் பரீட்சைச் சான்றிதழை நிகழ்நிலையில் பெற்றுக்கொள்ள <a href="#" class="text-blue-800 underline">www.doenets.lk</a> ஊடாக இலங்கைப் பரீட்சைத் திணைக்களத்தின் உத்தியோகபூர்வ இணையத்தளமான "ONLINE CERTIFICATE (G.C.E. (O/L) AND G.C.E. (A/L))" இற்குப் பிரவேசிக்கவும்.
+                </p>
+            </div>
+
+            <!-- Formularbereich -->
+            <div class="px-6 md:px-20">
+                <div class="flex flex-col md:flex-row gap-4 mb-6">
+                    <select class="w-full md:w-1/3 p-2 border border-gray-300 rounded text-gray-700 bg-white focus:outline-none shadow-sm text-sm">
+                        <option>Select the Exam</option>
+                        <option>G.C.E.(A/L) EXAMINATION</option>
+                        <option>G.C.E (O/L) Examination</option>
+                        <option>GRADE 5 SCHOLARSHIP EXAMINATION (After Appeals)</option>
+                    </select>
+                    <select class="w-full md:w-1/4 p-2 border border-gray-300 rounded text-gray-700 bg-white focus:outline-none shadow-sm text-sm">
+                        <option>Select the year</option>
+                        <option>2024(2025)</option>
+                        <option>2025(2026)</option>
+                    </select>
+                    <div class="flex w-full md:w-[45%] rounded shadow-sm">
+                        <select class="w-1/3 md:w-1/4 p-2 border border-gray-300 rounded-l text-gray-700 bg-[#e9ecef] border-r-0 focus:outline-none text-sm">
+                            <option>Index</option>
+                            <option>NIC</option>
+                        </select>
+                        <!-- Eingabefeld für NIC/Index -->
+                        <input type="text" id="nic-input" placeholder="Search By ..." class="w-2/3 md:w-3/4 p-2 border border-gray-300 rounded-r text-gray-700 focus:outline-none placeholder-gray-400 text-sm">
+                    </div>
+                </div>
+
+                <!-- Mock hCaptcha container -->
+                <div class="flex justify-center mb-6 w-full">
+                    <div class="bg-[#f9f9f9] border border-gray-300 rounded shadow-sm w-full max-w-[302px] h-[76px] flex items-center px-3 justify-between overflow-hidden">
+                        <div class="flex items-center gap-2 md:gap-3">
+                            <div id="captcha-checkbox" class="flex-shrink-0 w-[28px] h-[28px] border-[2px] border-[#c1c1c1] bg-white rounded-[2px] cursor-pointer hover:border-gray-400 flex items-center justify-center"></div>
+                            <span class="text-[13px] md:text-[14px] text-gray-800 font-sans whitespace-nowrap">I am human</span>
+                        </div>
+                        <div class="flex flex-col items-center justify-center mt-1 flex-shrink-0">
+                            <!-- SVG logo for hCaptcha to prevent broken images -->
+                            <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M37.3333 13.3333H10.6667C9.19391 13.3333 8 14.5272 8 16V32C8 33.4728 9.19391 34.6667 10.6667 34.6667H37.3333C38.8061 34.6667 40 33.4728 40 32V16C40 14.5272 38.8061 13.3333 37.3333 13.3333ZM10.6667 10.6667C7.72115 10.6667 5.33333 13.0545 5.33333 16V32C5.33333 34.9455 7.72115 37.3333 10.6667 37.3333H37.3333C40.2788 37.3333 42.6667 34.9455 42.6667 32V16C42.6667 13.0545 40.2788 10.6667 37.3333 10.6667H10.6667Z" fill="#18C0C9"/>
+                                <path d="M26.6667 24H21.3333V29.3333H16V18.6667H26.6667V24Z" fill="#18C0C9"/>
+                                <path d="M32 18.6667H26.6667V24H32V18.6667Z" fill="#18C0C9"/>
+                            </svg>
+                            <span class="text-[10px] text-gray-500 font-sans mt-1">hCaptcha</span>
+                            <span class="text-[8px] text-gray-400 font-sans mt-0.5">Privacy - Terms</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Schaltflächen -->
+                <div class="flex justify-center gap-2">
+                    <!-- Senden-Schaltfläche -->
+                    <button id="submit-btn" class="bg-[#5c85d6] hover:bg-blue-600 text-white font-bold py-2.5 px-10 rounded shadow w-40 text-sm">
+                        Submit
+                    </button>
+                    <!-- Zurücksetzen-Schaltfläche -->
+                    <button id="reset-btn" class="bg-[#e05a47] hover:bg-red-600 text-white font-bold py-2.5 px-10 rounded shadow w-40 text-sm">
+                        Reset
+                    </button>
+                </div>
+
+                <!-- Ergebniscontainer -->
+                <div id="results-container" class="hidden mt-8 bg-white border border-cyan-400 rounded-sm p-6 relative shadow-sm w-full">
+                    <button id="close-results" class="absolute top-2 right-4 text-cyan-500 hover:text-cyan-800 font-bold text-xl cursor-pointer">&times;</button>
+                    
+                    <h3 class="text-center font-bold text-gray-800 mb-6 text-sm">
+                        G.C.E (O/L) Examination <span class="bg-gray-800 text-white px-2 py-0.5 rounded-full text-xs font-bold ml-1">2025(2026)</span>
+                    </h3>
+                    
+                    <div class="flex flex-col md:flex-row text-xs md:text-sm gap-8">
+                        <div class="w-full md:w-[55%] space-y-4">
+                            <div class="grid grid-cols-[130px_1fr] gap-2">
+                                <div class="font-bold text-gray-700">Examination</div>
+                                <div class="text-gray-600">G.C.E (O/L) Examination</div>
+                            </div>
+                            <div class="grid grid-cols-[130px_1fr] gap-2">
+                                <div class="font-bold text-gray-700">Year</div>
+                                <div class="text-gray-600">2025(2026)</div>
+                            </div>
+                            <div class="grid grid-cols-[130px_1fr] gap-2">
+                                <div class="font-bold text-gray-700">Name</div>
+                                <div class="text-gray-600 uppercase">HERATH MUDIYANSELAGE BATAGOLLE GEDARA PASAN PIYUMAL BANDARA HERATH</div>
+                            </div>
+                            <div class="grid grid-cols-[130px_1fr] gap-2">
+                                <div class="font-bold text-gray-700">Index Number</div>
+                                <div class="text-gray-600">43523439</div>
+                            </div>
+                            <div class="grid grid-cols-[130px_1fr] gap-2">
+                                <div class="font-bold text-gray-700">NIC Number</div>
+                                <div class="text-gray-600">200829202674</div>
+                            </div>
+                        </div>
+                        
+                        <div class="w-full md:w-[45%] space-y-2.5">
+                            <div class="flex justify-between items-center text-gray-600">
+                                <div class="flex items-center gap-3"><i class="fas fa-chevron-right text-gray-400 text-[10px]"></i> SINHALA LANGUAGE & LITT.</div>
+                                <div class="bg-gray-200 text-gray-700 font-bold px-2 py-0.5 rounded text-xs w-6 text-center">C</div>
+                            </div>
+                            <div class="flex justify-between items-center text-gray-600">
+                                <div class="flex items-center gap-3"><i class="fas fa-chevron-right text-gray-400 text-[10px]"></i> ENGLISH LANGUAGE</div>
+                                <div class="bg-gray-200 text-gray-700 font-bold px-2 py-0.5 rounded text-xs w-6 text-center">C</div>
+                            </div>
+                            <div class="flex justify-between items-center text-gray-600">
+                                <div class="flex items-center gap-3"><i class="fas fa-chevron-right text-gray-400 text-[10px]"></i> MATHEMATICS</div>
+                                <div class="bg-gray-200 text-gray-700 font-bold px-2 py-0.5 rounded text-xs w-6 text-center">A</div>
+                            </div>
+                            <div class="flex justify-between items-center text-gray-600">
+                                <div class="flex items-center gap-3"><i class="fas fa-chevron-right text-gray-400 text-[10px]"></i> SCIENCE</div>
+                                <div class="bg-gray-200 text-gray-700 font-bold px-2 py-0.5 rounded text-xs w-6 text-center">B</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Bottom floating links -->
+            <div class="absolute bottom-[-20px] right-4 flex gap-2">
+                <button class="bg-white text-green-500 border border-green-400 px-4 py-1.5 rounded hover:bg-gray-50 text-sm">Print</button>
+                <button class="bg-white text-blue-400 border border-blue-400 px-4 py-1.5 rounded hover:bg-gray-50 text-sm">Other Examination Results</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Tukuyawi (Footer section) -->
+    <footer class="footer-dark text-white pt-10 pb-4 border-t-4 border-red-800 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                
+                <!-- Tukuyawi Uñachäwi (Footer Emblem) -->
+                <div class="flex justify-center md:justify-start items-center">
+                    <img src="https://www.doenets.lk/assets/images/SL-Logo.png" alt="Sri Lanka Emblem" class="h-32 w-auto drop-shadow-lg">
+                </div>
+
+                <!-- Contact Us -->
+                <div class="col-span-1 md:col-span-1">
+                    <h3 class="text-lg font-bold mb-4">Contact Us</h3>
+                    <ul class="space-y-3 text-sm text-gray-300">
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-map-marker-alt mt-1 text-gray-100"></i>
+                            <span>Department of Examinations Sri Lanka , Pelawatta,<br>Battaramulla, Sri Lanka.</span>
+                        </span></li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-envelope text-gray-100"></i>
+                            <span>E-Mail : exams@doenets.lk</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-fax text-gray-100"></i>
+                            <span>Hotline : 1911</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-phone-alt text-gray-100"></i>
+                            <span>Telephone Number : +94 11 2786200, +94 11 2784203-4</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Quick Links 1 -->
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-4 text-sm text-gray-300">
+                        <li><a href="#" class="hover:text-white">School Exam Results</a></li>
+                        <li><a href="#" class="hover:text-white">Exam Calendar</a></li>
+                        <li><a href="#" class="hover:text-white">Services</a></li>
+                    </ul>
+                </div>
+
+                <!-- Quick Links 2 -->
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-4 text-sm text-gray-300">
+                        <li><a href="#" class="hover:text-white">Downloads</a></li>
+                        <li><a href="#" class="hover:text-white">Gallery</a></li>
+                        <li><a href="#" class="hover:text-white">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Footer Bottom Line -->
+            <div class="border-t border-gray-600 pt-4 mt-6 flex flex-col md:flex-row justify-between items-center text-xs text-gray-300">
+                
+                <div class="flex items-center gap-2 mb-2 md:mb-0">
+                    <span class="font-semibold text-white">Developed By</span>
+                    <!-- Text styled to look like INOVA logo -->
+                    <span class="text-red-600 font-black text-sm tracking-wide">INOVA</span>
+                </div>
+                
+                <div class="text-center mb-2 md:mb-0 font-medium">
+                    Copyright © 2022 - Department of Examinations, Sri Lanka. All Rights Reserved
+                </div>
+                
+                <div class="flex items-center gap-4">
+                    <span class="font-semibold text-white">Powered By</span>
+                    <!-- Text styled to look like Dialog logo -->
+                    <span class="text-red-500 font-bold italic text-sm">Dialog</span>
+                    <!-- Text styled to look like headstart logo -->
+                    <span class="text-red-500 font-semibold text-sm lowercase flex items-center">
+                        <div class="w-3 h-3 bg-red-500 rounded-full mr-1 flex items-center justify-center">
+                           <div class="w-1.5 h-1.5 bg-white rounded-full"></div>
+                        </div>
+                        headstart
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nach oben scrollen -->
+        <a href="#" class="absolute right-4 bottom-4 bg-black text-white w-8 h-8 rounded-full flex items-center justify-center hover:bg-gray-800 shadow-lg border-2 border-white">
+            <i class="fas fa-chevron-up"></i>
+        </a>
+    </footer>
+
+    <!-- Skripte (JavaScript) -->
+    <script>
+        // Fake-Klick für hCaptcha
+        document.getElementById('captcha-checkbox').addEventListener('click', function() {
+            this.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" fill="#18C0C9"/></svg>';
+            this.classList.remove('hover:border-gray-400');
+        });
+
+        document.getElementById('submit-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            const nicValue = document.getElementById('nic-input').value.trim();
+            if(nicValue === '200829202674') {
+                // Loding torisi (Show loader)
+                document.getElementById('loader-overlay').classList.remove('hidden');
+                
+                // 2 sekendugala nantara result torisi (Wait 2 seconds)
+                setTimeout(function() {
+                    document.getElementById('loader-overlay').classList.add('hidden');
+                    document.getElementById('results-container').classList.remove('hidden');
+                    
+                    // Mobile nalli sariyagi kanalu kelage scroll madi (Scroll into view for better mobile experience)
+                    document.getElementById('results-container').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 2000);
+            }
+        });
+
+        document.getElementById('close-results').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('results-container').classList.add('hidden');
+        });
+
+        document.getElementById('reset-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('nic-input').value = '';
+            document.getElementById('results-container').classList.add('hidden');
+        });
+    </script>
+</body>
+</html>
